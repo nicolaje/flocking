@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>Robotics Simulation with MORSE</title>
+
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Robotics Simulation with MORSE</title>
+
+    <meta name="description" content="A framework for easily simulating robots with Python and Blender">
+    <meta name="author" content="Jeremy Nicola">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section data-background-video="media/videos/morse-1.0.webm">
+          <h1>MORSE</h1>
+          <h3>Robotics simulation with Blender and Python</h3>
+          <p>
+            <small><a href="http://www.jeremy-nicola.info">Jeremy Nicola</a> / <a href="mailto:jeremy.nicola@gmail.com">Contact me</a></small>
+          </p>
+        </section>
+
+        <section>
+           <section>
+           <h2>MORSE: Blender</h2>
+           <p>
+             Blender is a professional, open source 3D modeling, rendering and animation software.
+           </p>
+           <iframe data-autoplay width="420" height="345" src="https://www.youtube.com/embed/YE7VzlLtp-4"></iframe>
+         </section>
+
+          <section>
+            <h2>MORSE: Blender Game Engine</h2>
+            <video class="stretch" data-autoplay src="media/videos/bge-yofrankie.webm"></video>
+          </section>
+          <section>
+            <h2>MORSE: Blender Game Engine</h2>
+            <p>
+              The BGE comes with Bullet, a powerful physics engine
+            </p>
+            <video class="stretch" data-autoplay src="media/videos/bullet.webm"></video>
+          </section>
+      </section>
+
+        <section>
+          <section>
+            <h2>MORSE: components</h2>
+            <h3>Environments</h3>
+            <p>The environment is a Blender scene of the environment we want our tobots to evolve in.</p>
+            <img src="media/imgs/buildings_2.jpg"></img>
+          </section>
+
+            <section>
+              <h2>MORSE: components</h2>
+              <h3>Environments</h3>
+              <p>The environment is a Blender scene of the environment we want our tobots to evolve in.</p>
+              <img src="media/imgs/indoor-1.jpg"></img>
+            </section>
+
+              <section>
+                <h2>MORSE: components</h2>
+                <h3>Environments</h3>
+                <p>The environment is a Blender scene of the environment we want our tobots to evolve in.</p>
+                <img src="media/imgs/outdoors1.jpg"></img>
+              </section>
+
+          <section>
+            <h2>MORSE: components</h2>
+            <h3>Robots</h3>
+            <p>A robot is a 3D model with some physical properties</p>
+            <img src="media/imgs/atrv.png"></img>
+          </section>
+
+          <section>
+            <h2>MORSE: components</h2>
+            <h3>Robots</h3>
+            <p>A robot is a 3D model with some physical properties</p>
+            <img src="media/imgs/pioneer3dx.png"></img>
+          </section>
+
+          <section>
+            <h2>MORSE: components</h2>
+            <h3>Robots</h3>
+            <p>A robot is a 3D model with some physical properties</p>
+            <img src="media/imgs/pr2.png"></img>
+          </section>
+
+          <section>
+            <h2>MORSE: components</h2>
+            <h3>Actuators</h3>
+            <p>An actuator takes some inputs from the outside world (via a middleware :ros, moos, sockets...)</br>
+            and changes the behavior of the robot (modify its speed, its orientation...)</p>
+          </section>
+
+          <section>
+            <h2>MORSE: components</h2>
+            <h3>Sensors</h3>
+            <p>A sensor gather data from the simulated world (distances, position, speed...) and communicate it to the outside world
+            using a middleware</p>
+          </section>
+
+          <section>
+            <h2>MORSE: components</h2>
+            <h3>Sensors</h3>
+            <img src="media/imgs/video_camera.png"></img>
+          </section>
+
+          <section>
+            <h2>MORSE: components</h2>
+            <h3>Sensors</h3>
+            <img src="media/imgs/hokuyo1.png"></img>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Anatomy of a MORSE simulation</h2>
+            <h3>Creating a simulation workspace</h3>
+
+            <pre>
+              <code>
+                :~$ morse create flocking
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h2>Anatomy of a MORSE simulation</h2>
+            <h3>Creating a simulation workspace</h3>
+            <img src="media/imgs/flocking_root.png"></img>
+          </section>
+
+          <section>
+            <h2>Anatomy of a MORSE simulation</h2>
+            <h3>The builder script 1/3</h3>
+            <img src="media/imgs/flocking_root_default.png"></img>
+          </section>
+
+          <section>
+            <h2>Anatomy of a MORSE simulation</h2>
+            <h3>The builder script 2/3</h3>
+            <p>The root of the simulation folder contains a default.py script that describes, in python, the scene to be simulated.</p>
+            <pre>
+              <code style="margin:0;padding:0;">
+from morse.builder import *
+
+robot = Morsy() # This is a robot
+
+robot.translate(1.0, 0.0, 0.0) # Placed in x=1,y=0,z=0
+
+motion = MotionVW() # This is an actuator, to act on the robot
+robot.append(motion) # The actuator has to be attached to the robot
+
+# ...
+              </code>
+            </pre>
+          </section>
+
+
+          <section>
+            <h2>Anatomy of a MORSE simulation</h2>
+            <h3>The builder script 3/3</h3>
+            <pre>
+              <code>
+# ...
+
+pose = Pose() # This is a sensor, it senses
+# the position of the robot
+robot.append(pose)
+
+robot.add_default_interface('socket') # Here we will interact
+# with MORSE through sockets
+# but we could also use Moos, ROS, Yarp...
+
+# This is the model of the environment
+env = Environment('sandbox', fastmode = False)
+env.set_camera_location([10.0, -10.0, 10.0])
+env.set_camera_rotation([1.05, 0, 0.78])
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h2>Anatomy of a MORSE simulation</h2>
+            <p>Launching the simulation</p>
+
+            <pre>
+              <code>
+                :~$ morse run flocking
+              </code>
+            </pre>
+          </section>
+
+
+          <section>
+            <h2>Anatomy of a MORSE simulation</h2>
+            <p>Launching the simulation</p>
+
+            <img src="media/imgs/morse-run.png"></img>
+          </section>
+
+
+          <section>
+            <h2>Anatomy of a MORSE simulation</h2>
+            <p>The simulation folder is self contained.</br>
+            To use it on an other computer, just run:</p>
+            <pre>
+              <code>
+                :~$ morse import /path/to/simu/folder simu-name
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h2>Anatomy of a MORSE simulation</h2>
+            <h3>Creating your own robot 1/2</h3>
+            <p>To add a robot in your simulation, you can use the following tool:</p>
+            <pre>
+              <code>
+                :~$ morse add robot car flocking
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h2>Anatomy of a MORSE simulation</h2>
+            <h3>Creating your own robot 2/2</h3>
+            <p>We are going to use a pre-made robot during this course, we won't make a custom one. For more information about creating your own robot, refer to <a href="https://www.openrobots.org/morse/doc/stable/user/builder.html">[1]</a>,<a href="http://nicola.je/morse-scout/#/">[2]</a></p>
+          </section>
+
+          <section>
+            <h2>Anatomy of a MORSE simulation</h2>
+            <h3>Creating your own actuator 1/2</h3>
+            <pre>
+              <code>
+                :~$ morse add actuator carActuator flocking
+              </code>
+            </pre>
+          </section>
+<section>
+  <h2>Anatomy of a MORSE simulation</h2>
+  <h3>Creating your own actuator 2/2</h3>
+  <p>We are going to use off the shelf actuators, for building a custom actuator, please refer to <a href="https://www.openrobots.org/morse/doc/stable/user/builder.html">[1]</a>,<a href="http://nicola.je/morse-scout/#/">[2]</a>
+  </p>
+</section>
+
+<section>
+  <h2>Anatomy of a MORSE simulation</h2>
+  <h3>Creating your own sensor 1/7</h3>
+  <pre>
+    <code>
+      :~$ morse add sensor flockingSensor flocking
+    </code>
+  </pre>
+  <p>This sensor will give the state of the current robot and the states of all the robots in the scene</p>
+</section>
+
+
+<section>
+  <h2>Anatomy of a MORSE simulation</h2>
+  <h3>Creating your own sensor 2/7</h3>
+  <img src="media/imgs/morse_create_sensor.png"></img>
+</section>
+
+<section>
+  <h2>Anatomy of a MORSE simulation</h2>
+  <h3>Creating your own sensor 3/7</h3>
+  <p>
+    A script is created that corresponds to our sensor implementation:
+  </p>
+  <img src="media/imgs/sensor_folder.png"></img>
+</section>
+
+<section>
+  <h2>Anatomy of a MORSE simulation</h2>
+  <h3>Creating your own sensor 4/7</h3>
+  <p>
+    It mainly consist of two parts:
+    <ul>
+      <li>The description of the data exported by this sensor</li>
+      <li>The method called regularily to gather the data</li>
+    </ul>
+  </p>
+</section>
+
+<section>
+  <h2>Anatomy of a MORSE simulation</h2>
+  <h3>Creating your own sensor 5/7</h3>
+  <p>First, we define the variables that will be exported to the outside world:</p>
+  <pre>
+    <code>
+add_data('state', [], "list",
+'The state vector of the robot that carries this sensor: x,y,theta')
+add_data('states', [], "list",
+'The state vectors of the surrounding robots: [(x1,y1,theta1)...]')
+    </code>
+  </pre>
+</section>
+
+<section>
+  <h2>Anatomy of a MORSE simulation</h2>
+  <h3>Creating your own sensor 6/7</h3>
+  <p>The default_action is where the logic of the sensor goes</p>
+  <pre>
+    <code>
+def default_action(self):
+  robot = self.robot_parent.bge_object
+  # Store the state vector of the carrier robot
+  self.local_data['state'] = [self.position_3d.x,\
+  self.position_3d.y,self.position_3d.yaw]
+  self.local_data['states'] = []
+  for obj in blenderapi.scene().objects:
+    try:
+      obj["Robot_Tag"] # Is the object a robot?
+      if robot != obj: # Skip the carrier robot
+        # Store the state vector of the detected robot
+        self.local_data['states'].append(...)
+        # Warning: there is a shift of -Pi/2 in the yaw angle
+        # from the worldOrientation method
+      except KeyError:
+        pass
+    </code>
+  </pre>
+</section>
+
+<section>
+  <h2>Anatomy of a MORSE simulation</h2>
+  <h3>Creating your own sensor 7/7</h3>
+  <p>You can now equip a robot with your own sensor, and MORSE will regularly trigger its default_action method.</p>
+  <p>In your builder script:</p>
+  <pre>
+<code>
+  from flockgin.builder.sensors import FlockingSensor
+  #...
+  flockingSensor=FlockingSensor()
+  flockingSensor.frequency(2) # How often should it acquire data?
+  robot.append(flockingSensor)
+</code>
+  </pre>
+</section>
+</section>
+
+<section>
+
+    <section>
+      <h3>Talking to morse</h3>
+      <h4>With Pymorse 1/5</h4>
+      <p>
+        Pymorse is the MORSE middleware. It is a pure Python library that interacts with the simulator through sockets. <br/>
+        From the description of the fields of your actuators and sensors (remember "add_data"?), it automatically export the data that is accessible to an external script through pymorse.
+      </p>
+    </section>
+
+    <section>
+      <h3>Talking to morse</h3>
+      <h4>With Pymorse 2/5</h4>
+      <p>
+        The scripts folder contains an example pymorse script to interact with the default simulation scene.
+      </p>
+      <img src="media/imgs/flocking_root_scripts.png"></img>
+    </section>
+
+    <section>
+      <h3>Talking to morse</h3>
+      <h4>With Pymorse 3/5</h4>
+      <p>
+        Suppose you have a simulation running with a robot named "robot" and a position sensor named "pose" attached to it.<br/>
+        Then, from an external script, you can access its data with pymorse:
+      </p>
+      <pre>
+        <code>
+          import pymorse
+
+          def callback(data):
+            print("I received this: "+str(data))
+
+          with pymorse.Morse() as simu:
+            simu.robot.pose.subscribe(callback)
+            simu.sleep(10)
+        </code>
+      </pre>
+    </section>
+
+    <section>
+      <h3>Talking to morse</h3>
+      <h4>With Pymorse 4/5</h4>
+      <p>
+        Try it!
+        Open two terminals and go at the root of the provided "morse-box" folder.
+      </p>
+      <pre>
+        <code>
+          # First, source the configuration file
+          source pythonShell.sh
+          # Then import the simulation environment
+          morse import flocking
+          # Launch it
+          morse run flocking simple_pose.py
+        </code>
+        <code>
+          # In a second terminal, run the pymorse script
+          source pythonShell.sh
+          python flocking/scripts/simple_pose.py
+        </code>
+      </pre>
+      <img src="media/imgs/flocking_root_scripts.png"></img>
+    </section>
+
+    <section>
+      <h3>Talking to morse</h3>
+      <h4>With Pymorse 5/5</h4>
+      <p>
+        Try it!<br/>
+        Take some time to read the flocking/simple_pose.py and flocking/scripts/test_simple_pose.py scripts.
+      </p>
+    </section>
+
+  <section>
+    <h3>Talking to morse</h3>
+    <h4>With MOOS 1/3</h4>
+    <p>
+      Morse provides mechanisms to interface your components with other middlewares.</br>
+      You just have to provide a custom serialization/deserialization script when instantiating your sensor/actuator.
+    </p>
+    <pre>
+      <code>
+flockingSensor=FlockingSensor()
+flockingSensor.add_stream('moos','flocking.sensors.FlockingNotifier\
+.FlockingNotifier',moos_port=9001)
+      </code>
+    </pre>
+  </section>
+
+  <section>
+    <h3>Talking to morse</h3>
+    <h4>With MOOS 2/3</h4>
+    <p>
+      Structure of a MOOS serializer for the Flocking sensor </br>
+      in flocking/src/flocking/sensors/FlockingNotifier.py
+    </p>
+    <pre>
+      <code>
+import pymoos.MOOSCommClient
+from morse.middleware.moos import AbstractMOOS
+class FlockingNotifier(AbstractMOOS):
+  def default(self,  ci='unused'):
+    cur_time=pymoos.MOOSCommClient.MOOSTime()
+    # Notify the MOOSDB of the robot state
+    state=self.data['state']
+    self.m.Notify("state",",".join(map(str,state)),cur_time)
+    # Go through all the states of the other robots measured
+    # by the sensor and serialize them in a big string
+    res=[]
+    for otherState in self.data['states']:
+      res.append(",".join(map(str,otherState)))
+      # Publish it in the MOOSDB
+      self.m.Notify("states", ",".join(res), cur_time)
+      </code>
+    </pre>
+  </section>
+
+  <section>
+    <h3>Talking to morse</h3>
+    <h4>With MOOS 3/3</h4>
+    <p>
+      Now, the Flocking sensor of the robot will publish its data in a MOOSDB on the port 9001,<br/>,
+      and therefore an external MOOS process will be able to listen.
+    </p>
+  </section>
+
+  </section>
+</section>
+<section>
+
+<section>
+<h3>Tasks</h3>
+<h4>Setting the project up</h4>
+You were given a folder containing a ready to use Python+MORSE installation, and a simulation environment named "flocking".
+<ol>
+  <li>Always work from a terminal that sourced the "pythonShell.sh" script. To be sure it is the case, run "morse check".</li>
+  <li>If you followed the previous instructions, you already imported the environment. Check it is the case: "morse import flocking".</li>
+  <li>You are working with the default.py environment.</li>
+</ol>
+</section>
+
+<section>
+<h3>Tasks</h3>
+<h4>Builder script</h4>
+
+<ol>
+  <li>Initialize 30 ATRV robots at random positions and orientations.Name them all "robot" (important)</li>
+  <li>Attach a MotionVW actuator with the socket interface to them.</li>
+  <li>Attach  a FlockingSensor to each of them, with a socket interface. The update frequency will be set low, e.g.:2Hz. Why?</li>
+</ol>
+</section>
+
+<section>
+<h3>Tasks</h3>
+<h4>Implement the Flocking sensor</h4>
+<p>This sensor gives the current state of the robot and all the states of all the other robots in the simulation.</p>
+<ol>
+  <li>Open flocking/src/flocking/sensors/FlockingSensor.py.</a></li>
+  <li>Implement what is missing. (Trap: the Blender Game Engine adds a shift of -Pi/2 on the Yaw angle in the worldOrientation method).</li>
+</ol>
+</section>
+
+<section>
+<h3>Tasks</h3>
+<h4>Implement the Flocking behaviour</h4>
+<p>Using pymorse, implement a Flocking behaviour. <a href="https://www.youtube.com/watch?v=g4X24h9yZAI">[1]</a><br/>
+You are given the script scripts/flocking.py to get you started</p>
+<ol>
+  <li>Open scripts/flocking.py.</a></li>
+  <li>Implement what is missing.</li>
+  <li>Test the flocking behaviour.</li>
+  <li>In a swarm, it seems that each individual is mostly influenced by its 7 closest neighbours <a href"https://en.wikipedia.org/wiki/Flocking_(behavior)">[2]</a>. Adapt the Flocking sensor accordingly.</li>
+</ol>
+</section>
+
+<section>
+<h3>Tasks</h3>
+<h4>Interface the simulation with MOOS 1/2</h4>
+<p>
+  We will run one MOOSDB per robot, each running on a separated port.<br/>
+  The script launchMOSSDBs.sh launches a given number N of MOOSDB on the ports [9001,...,9000+N], e.g.:
+  <pre>
+    <code>
+$ ./launchMOSSDB.sh 30 # Launches 30 MOOSDB on ports [9001,...,9030]
+    </code>
+  </pre>
+</p>
+</section>
+
+<section>
+<h3>Tasks</h3>
+<h4>Interface the simulation with MOOS 2/2</h4>
+<ol>
+  <li>The MotionVW already has a MOOS exporter. Configure it.</a></li>
+  <li>Complete the MOOS notifier for the Flocking sensor in "src/flocking/sensors/FlockingNotifier.py" (solution is given above).</li>
+  <li>Configure the Flocking sensors with the MOOS notifiers.</li>
+  <li>Launch the MOOSDBs, the simulation, and check the variables are correctly published.</li>
+  <li>Write a MOOS process that does the Flocking behaviour for one robot, and instantiate it N times to control the swarm instead of the pymorse script.</li>
+</ol>
+</section>
+
+</section>
+<section data-background-image="media/imgs/morsy.png">
+</section>
+      </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+
+    // Full list of configuration options available at:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+
+      transition: 'slide', // none/fade/slide/convex/concave/zoom
+math: {
+        mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
+        config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+    },
+      // Optional reveal.js plugins
+      dependencies: [
+        { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+        { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+        { src: 'plugin/zoom-js/zoom.js', async: true },
+        { src: 'plugin/notes/notes.js', async: true },
+        { src: 'plugin/math/math.js', async: true }
+      ]
+    });
+
+    </script>
+  </body>
+  </html>
