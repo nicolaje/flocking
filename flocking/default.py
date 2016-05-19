@@ -2,28 +2,27 @@
 
 from morse.builder import *
 from flocking.builder.sensors import Flockingsensor
+from random import uniform, gauss
 from math import pi
 
-# TODO: you must instantiate 30 ATRV robot in random states. A single instantiation is given as an example.
+for i in range(1,30):
+    robot = ATRV('robot')
+    AbstractComponent.close_context()
 
-robot = ATRV('robot')
+    flockSensor=Flockingsensor()
+    flockSensor.frequency(2)
+    flockSensor.add_interface('socket')
+    #flockSensor.add_stream('moos','flocking.sensors.FlockingNotifier.FlockingNotifier',moos_port=9000+i)
+    robot.append(flockSensor)
 
-flockSensor=Flockingsensor()
-flockSensor.frequency(2)
-flockSensor.add_interface('socket')
+    differential_actuator=MotionVW()
+    differential_actuator.add_interface('socket')
+    differential_actuator.frequency(10)
+    robot.append(differential_actuator)
 
-# When you will be ready with MOOSDB running in the background, add your MOOS interface
-#flockSensor.add_stream('moos','flocking.sensors.FlockingNotifier.FlockingNotifier',moos_port=9001)
-robot.append(flockSensor)
-
-differential_actuator=MotionVW()
-differential_actuator.add_interface('socket')
-differential_actuator.frequency(10)
-robot.append(differential_actuator)
-
-robot.translate(x=0,y=1)
-robot.rotate(z=pi/2)
-robot.add_default_interface('socket')
+    robot.translate(x=gauss(0,10),y=gauss(0,10))
+    robot.rotate(z=uniform(0,2*pi))
+    robot.add_default_interface('socket')
 
 # set 'fastmode' to True to switch to wireframe mode
 env = Environment('flat.blend', fastmode = False)
