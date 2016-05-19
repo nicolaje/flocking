@@ -25,13 +25,13 @@ class Flockingsensor(morse.core.sensor.Sensor):
     def default_action(self):
         robot = self.robot_parent.bge_object
 
-        self.local_data['state'] = [0,0,0] # ! Fill the vector! Hint: robot.position_3d (powered by MORSE, so does not suffer from a shift in the Yaw)
+        self.local_data['state'] = [self.position_3d.x,self.position_3d.y,self.position_3d.yaw]
         self.local_data['states'] = []
         for obj in blenderapi.scene().objects:
             try:
                 obj["Robot_Tag"]
                 # Skip distance to self
                 if robot != obj:
-                    self.local_data['states'].append((0,0,0)) # ! Fill the vector! Hint: worldPosition and worldOrientation methods !
+                    self.local_data['states'].append((obj.worldPosition[0],obj.worldPosition[1],obj.worldOrientation.to_euler()[2]+pi/2))
             except KeyError:
                 pass
